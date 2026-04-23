@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajjal Car - PRO</title>
+
+<style>
+:root{
+    --bg:#050505;
+    --card:#121212;
+    --accent:#4fd1c5;
+    --white:#fff;
+    --gray:#94a3b8;
+    --blue-glow: #00d4ff; 
+}
+
+body{
+    margin:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--bg);
+    color:var(--white);
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:25px;
+}
+
+header img{
+    width:220px;
+    /* الشعاع الأزرق للوكو */
+    filter: drop-shadow(0 0 12px var(--blue-glow));
+}
+
+h1{
+    color:var(--accent);
+    text-align:center;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    /* الشعاع الأزرق للاسم */
+    text-shadow: 0 0 10px var(--blue-glow);
+}
+
+/* GRID */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    background:var(--card);
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    transition:.3s;
+    border:1px solid #222;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:var(--accent);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.info{
+    padding:15px;
+}
+
+.name{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.price{
+    color:var(--accent);
+    margin:8px 0;
+    font-weight: 600;
+}
+
+.badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(79,209,197,0.2);
+    color:var(--accent);
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:12px;
+    border: 1px solid var(--accent);
+    backdrop-filter: blur(5px);
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:var(--accent);
+    font-weight:bold;
+    cursor:pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background:#fff;
+    transform: scale(1.02);
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    justify-content:center;
+    align-items:center;
+    z-index: 1000;
+}
+
+.modal-content{
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:20px;
+    width:320px;
+    border: 1px solid var(--accent);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-bottom: 5px;
+}
+
+input{
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #252525;
+    color: #fff;
+}
+
+#phone {
+    width: 85%; 
+    display: block;
+    margin: 0 auto;
+}
+
+#total {
+    margin: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.status{
+    font-size:13px;
+    margin-top:5px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<img src="https://i.postimg.cc/4xc91vQ0/IMG-9468.jpg" alt="Rajjal Car Logo">
+</header>
+
+<h1>RAJJAL CAR</h1>
+
+<div class="container">
+<div class="grid">
+
+<div class="card" id="car1">
+<span class="badge">متوفرة</span>
+<img src="https://i.ibb.co/q3bVykwZ/dacia.jpg" alt="Dacia Logan">
+<div class="info">
+<div class="name">Dacia Logan 2023</div>
+<div class="price" data-price="250">250 DH / يوم</div>
+<div class="status"></div>
+<button onclick="openModal('Dacia Logan 2023',250,this)">حجز الآن</button>
+</div>
+</div>
+
+<div class="card" id="car2">
+<span class="badge">متوفرة</span>
+<img src="https://i.ibb.co/P8h0NWS/mercedes.jpg" alt="Mercedes Classe A">
+<div class="info">
+<div class="name">Mercedes Classe A</div>
+<div class="price" data-price="450">450 DH / يوم</div>
+<div class="status"></div>
+<button onclick="openModal('Mercedes Classe A',450,this)">حجز الآن</button>
+</div>
+</div>
+
+<div class="card" id="car3">
+<span class="badge">متوفرة</span>
+<img src="https://i.postimg.cc/TPTG7mbd/IMG-9475.jpg" alt="Range Rover Evoque">
+<div class="info">
+<div class="name">Range Rover Evoque</div>
+<div class="price" data-price="1100">1100 DH / يوم</div>
+<div class="status"></div>
+<button onclick="openModal('Range Rover Evoque',1100,this)">حجز الآن</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-content">
+<h3 id="carName" style="color:var(--accent); text-align:center;">تأكيد الحجز</h3>
+
+<div class="input-group">
+    <label>تاريخ الحجز (من):</label>
+    <input type="date" id="start">
+</div>
+
+<div class="input-group">
+    <label>إلى تاريخ:</label>
+    <input type="date" id="end">
+</div>
+
+<div class="input-group">
+    <label>رقم الهاتف:</label>
+    <input type="tel" id="phone" placeholder="0XXXXXXXXX">
+</div>
+
+<div id="total"></div>
+
+<button onclick="confirmBooking()">تأكيد وإرسال عبر واتساب</button>
+<button onclick="closeModal()" style="background:transparent; color:var(--gray); font-size:12px; margin-top:10px;">إلغاء</button>
+</div>
+</div>
+
+<script>
+let selectedCar = ""; let selectedPrice = 0; let selectedBtn = null;
+
+function openModal(name, price, btn){
+    selectedCar = name; selectedPrice = price; selectedBtn = btn;
+    document.getElementById("carName").innerText = name;
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){ document.getElementById("modal").style.display = "none"; document.getElementById("total").innerText = ""; }
+
+document.getElementById("start").onchange = document.getElementById("end").onchange = calc;
+
+function calc(){
+    let sVal = document.getElementById("start").value;
+    let eVal = document.getElementById("end").value;
+    if(sVal && eVal){
+        let s = new Date(sVal); let e = new Date(eVal);
+        if(e > s){
+            let days = Math.ceil((e - s) / (1000*60*60*24));
+            document.getElementById("total").innerText = "المجموع: " + (days * selectedPrice) + " DH (" + days + " أيام)";
+        } else {
+            document.getElementById("total").innerText = "تاريخ الانتهاء خاطئ";
+        }
+    }
+}
+
+function confirmBooking(){
+    let phone = document.getElementById("phone").value;
+    let start = document.getElementById("start").value;
+    let end = document.getElementById("end").value;
+
+    if(!phone || !start || !end){ alert("عافاك عمر جميع المعلومات 🙏"); return; }
+
+    selectedBtn.parentElement.querySelector(".status").innerText = "⛔ تم طلب الحجز";
+    selectedBtn.parentElement.querySelector(".status").style.color = "#ff4444";
+
+    let msg = `السلام عليكم وكالة Rajjal Car 🏎️\nبغيت نحجز السيارة: ${selectedCar}\n📅 من تاريخ: ${start}\n📆 إلى تاريخ: ${end}\n📱 رقم الهاتف: ${phone}`;
+
+    let whatsappURL = "https://wa.me/212662607103?text=" + encodeURIComponent(msg);
+    window.open(whatsappURL, "_blank");
+
+    closeModal();
+}
+
+window.onclick = function(event) { if (event.target == document.getElementById("modal")) closeModal(); }
+</script>
+
+</body>
+</html>
